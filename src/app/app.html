@@ -1,0 +1,361 @@
+@if (currentView() === 'admin') {
+  <app-admin-dashboard (close)="closeAdminPortal()"></app-admin-dashboard>
+} @else {
+  <!-- Announcement Bar -->
+  <div class="announce">
+    {{ i18n.t('announce') }}
+  </div>
+
+  <!-- Header & Filter Tools -->
+  <header class="top">
+    <div class="wrap">
+      <div class="head">
+        <h1 id="title">{{ config.storeName }}</h1>
+
+        <!-- Language Toggle Button -->
+        <button 
+          class="chip" 
+          id="langBtn" 
+          type="button" 
+          (click)="i18n.toggleLang()" 
+          aria-label="Language">
+          {{ i18n.currentLang() === 'en' ? 'മലയാളം' : 'English' }}
+        </button>
+
+        <!-- Admin Portal Button -->
+        <button 
+          class="chip admin-header-btn" 
+          id="adminBtn" 
+          type="button" 
+          (click)="openAdminPortal()" 
+          aria-label="Admin Dashboard"
+          title="Admin Dashboard">
+          ⚙️ Admin
+        </button>
+
+      <!-- Cart Button -->
+      <button 
+        class="cartbtn" 
+        id="cartBtn" 
+        type="button" 
+        (click)="cartService.openCart()" 
+        [attr.aria-label]="i18n.t('openCart') + ', ' + cartService.totalCount() + ' items'">
+        🛒 <span [attr.data-i18n]="'cart'">{{ i18n.t('cart') }}</span>
+        <b id="cartN" class="cart-count">{{ cartService.totalCount() }}</b>
+      </button>
+    </div>
+
+    <!-- Search, Sort & Category Chips -->
+    <div class="tools">
+      <input 
+        type="search" 
+        id="q" 
+        [ngModel]="searchQuery()" 
+        (ngModelChange)="searchQuery.set($event)" 
+        [placeholder]="i18n.t('search')" 
+        [attr.aria-label]="i18n.t('search')" 
+        maxlength="60" />
+
+      <select 
+        id="sort" 
+        [ngModel]="selectedSort()" 
+        (ngModelChange)="selectedSort.set($event)" 
+        [attr.aria-label]="i18n.t('sort')">
+        <option value="">{{ i18n.t('sort') }}</option>
+        <option value="lo">{{ i18n.t('sortLo') }}</option>
+        <option value="hi">{{ i18n.t('sortHi') }}</option>
+        <option value="az">{{ i18n.t('sortAz') }}</option>
+      </select>
+
+      <div class="chips" id="chips" role="group" [attr.aria-label]="i18n.t('categories')">
+        @for (category of categories(); track category) {
+          <button 
+            class="chip" 
+            type="button"
+            [class.active]="selectedCategory() === category"
+            [attr.aria-pressed]="selectedCategory() === category"
+            (click)="selectCategory(category)">
+            {{ i18n.getCategoryLabel(category, productService.products()) }}
+          </button>
+        }
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <!-- Warnings / Errors -->
+  @if (productService.warning()) {
+    <div class="notice-box">
+      {{ productService.warning() }}
+    </div>
+  }
+
+  @if (productService.errorMessage()) {
+    <div class="msg">
+      {{ productService.errorMessage() }}
+    </div>
+  }
+
+  <!-- Home Highlights (Visible when viewing All without active search query) -->
+  @if (isHome()) {
+    <!-- Hero Banner -->
+    <section class="hero">
+      <div>
+        <h2>{{ i18n.t('heroTitle') }}</h2>
+        <p>{{ i18n.t('heroSub') }}</p>
+        <div class="btns">
+          <button class="btn-hero" type="button" (click)="scrollTo('catalog')">
+            {{ i18n.t('shopNow') }}
+          </button>
+          @if (whatsappNumber) {
+            <a class="btn-hero btn-ghost" [href]="whatsappChatUrl" target="_blank" rel="noopener">
+              {{ i18n.t('chatUs') }}
+            </a>
+          }
+        </div>
+      </div>
+
+      <div class="hero-vis" id="heroVis">
+        @for (item of heroImages(); track item.id) {
+          <div class="hv">
+            @if (item.image) {
+              <img [src]="item.image" [alt]="i18n.getField(item, 'name')" />
+            } @else {
+              <span>🛍️</span>
+            }
+          </div>
+        }
+      </div>
+    </section>
+
+    <!-- Trust Badges Strip -->
+    <section class="trust">
+      <div class="ti">
+        <span class="ic">💬</span>
+        <div>
+          <b>{{ i18n.t('trust1') }}</b>
+          <small>{{ i18n.t('trust1s') }}</small>
+        </div>
+      </div>
+      <div class="ti">
+        <span class="ic">🔒</span>
+        <div>
+          <b>{{ i18n.t('trust2') }}</b>
+          <small>{{ i18n.t('trust2s') }}</small>
+        </div>
+      </div>
+      <div class="ti">
+        <span class="ic">⚡</span>
+        <div>
+          <b>{{ i18n.t('trust3') }}</b>
+          <small>{{ i18n.t('trust3s') }}</small>
+        </div>
+      </div>
+      <div class="ti">
+        <span class="ic">📦</span>
+        <div>
+          <b>{{ i18n.t('trust4') }}</b>
+          <small>{{ i18n.t('trust4s') }}</small>
+        </div>
+      </div>
+    </section>
+
+    <!-- Shop By Category Tiles -->
+    @if (categories().length > 1) {
+      <section class="sec">
+        <div class="sec-h">
+          <h3>{{ i18n.t('shopByCategory') }}</h3>
+        </div>
+        <div class="cats" id="cats">
+          @for (c of categories(); track c) {
+            @if (c !== 'All') {
+              <button 
+                class="ctile" 
+                type="button" 
+                (click)="selectCategory(c, true)" 
+                [attr.aria-pressed]="selectedCategory() === c">
+                <span class="ci">
+                  @if (getCategoryPic(c)?.image) {
+                    <img [src]="getCategoryPic(c)!.image" [alt]="c" />
+                  } @else {
+                    <span>🛍️</span>
+                  }
+                </span>
+                <span class="cl">{{ i18n.getCategoryLabel(c, productService.products()) }}</span>
+              </button>
+            }
+          }
+        </div>
+      </section>
+    }
+
+    <!-- Best Sellers Row -->
+    @if (bestSellers().length > 0) {
+      <section class="sec">
+        <div class="sec-h">
+          <h3>{{ i18n.t('bestSellers') }}</h3>
+        </div>
+        <div class="row">
+          @for (prod of bestSellers(); track prod.id) {
+            <app-product-card 
+              [product]="prod" 
+              (open)="selectedProduct.set($event)">
+            </app-product-card>
+          }
+        </div>
+      </section>
+    }
+
+    <!-- New Arrivals Row -->
+    @if (newArrivals().length > 0) {
+      <section class="sec">
+        <div class="sec-h">
+          <h3>{{ i18n.t('newArrivals') }}</h3>
+        </div>
+        <div class="row">
+          @for (prod of newArrivals(); track prod.id) {
+            <app-product-card 
+              [product]="prod" 
+              (open)="selectedProduct.set($event)">
+            </app-product-card>
+          }
+        </div>
+      </section>
+    }
+
+    <!-- Offers Row -->
+    @if (offers().length > 0) {
+      <section class="sec">
+        <div class="sec-h">
+          <h3>{{ i18n.t('offers') }}</h3>
+        </div>
+        <div class="row">
+          @for (prod of offers(); track prod.id) {
+            <app-product-card 
+              [product]="prod" 
+              (open)="selectedProduct.set($event)">
+            </app-product-card>
+          }
+        </div>
+      </section>
+    }
+  }
+
+  <!-- Catalog Section -->
+  <section class="sec" id="catalog">
+    <div class="sec-h">
+      <h3>
+        {{ selectedCategory() === 'All' ? i18n.t('allProducts') : i18n.getCategoryLabel(selectedCategory(), productService.products()) }}
+      </h3>
+      <div class="count" aria-live="polite">
+        {{ i18n.t(filteredProducts().length === 1 ? 'countOne' : 'countMany', filteredProducts().length) }}
+      </div>
+    </div>
+
+    <!-- Product Grid -->
+    <div class="grid" id="grid">
+      @if (productService.isLoading()) {
+        <div class="sk"></div>
+        <div class="sk"></div>
+        <div class="sk"></div>
+        <div class="sk"></div>
+      } @else if (filteredProducts().length === 0) {
+        <p class="empty">{{ i18n.t('noMatch') }}</p>
+      } @else {
+        @for (prod of filteredProducts(); track prod.id) {
+          <app-product-card 
+            [product]="prod"
+            [isHighlighted]="highlightedProductId() === prod.id"
+            (open)="selectedProduct.set($event)">
+          </app-product-card>
+        }
+      }
+    </div>
+  </section>
+</main>
+
+<!-- Footer -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="fgrid">
+      <div>
+        <h4 id="fName">{{ config.storeName }}</h4>
+        <p>{{ i18n.t('about') }}</p>
+      </div>
+      <div>
+        <h4>{{ i18n.t('quickLinks') }}</h4>
+        <ul class="flist">
+          <li><button class="linkbtn" type="button" (click)="scrollTo('top')">{{ i18n.t('home') }}</button></li>
+          <li><button class="linkbtn" type="button" (click)="scrollTo('catalog')">{{ i18n.t('shop') }}</button></li>
+          @if (whatsappNumber) {
+            <li><a [href]="whatsappChatUrl" target="_blank" rel="noopener">{{ i18n.t('chat') }}</a></li>
+          }
+          <li><button class="linkbtn admin-quick-link" type="button" (click)="openAdminPortal()">🔐 Admin Portal</button></li>
+        </ul>
+      </div>
+      <div>
+        <h4>{{ i18n.t('contact') }}</h4>
+        <ul class="flist">
+          @if (config.address) {
+            <li>{{ config.address }}</li>
+          }
+          @if (config.email) {
+            <li><a [href]="'mailto:' + config.email">{{ config.email }}</a></li>
+          }
+          @if (whatsappNumber) {
+            <li><a [href]="whatsappChatUrl" target="_blank" rel="noopener">WhatsApp</a></li>
+          }
+          @if (config.instagram) {
+            <li><a [href]="config.instagram" target="_blank" rel="noopener">Instagram</a></li>
+          }
+        </ul>
+      </div>
+    </div>
+    <div class="copy">
+      © {{ currentYear }} <span id="fBrand">{{ config.storeName }}</span>. {{ i18n.t('rights') }}
+    </div>
+  </div>
+</footer>
+
+<!-- Mobile Bottom Bar -->
+<nav class="bbar" aria-label="Mobile Navigation">
+  <button class="bb" type="button" (click)="scrollTo('top')">
+    <span class="i">🏠</span>
+    <span>{{ i18n.t('home') }}</span>
+  </button>
+  <button class="bb" type="button" (click)="scrollTo('catalog')">
+    <span class="i">🛍️</span>
+    <span>{{ i18n.t('shop') }}</span>
+  </button>
+  @if (whatsappNumber) {
+    <a class="bb" [href]="whatsappChatUrl" target="_blank" rel="noopener">
+      <span class="i">💬</span>
+      <span>{{ i18n.t('chat') }}</span>
+    </a>
+  }
+  <button class="bb" type="button" (click)="cartService.openCart()">
+    <span class="i">🛒</span>
+    <span>{{ i18n.t('cart') }}</span>
+    @if (cartService.totalCount() > 0) {
+      <b class="cart-count">{{ cartService.totalCount() }}</b>
+    }
+  </button>
+</nav>
+
+<!-- Modals & Drawers -->
+<app-product-modal 
+  [product]="selectedProduct()" 
+  (close)="selectedProduct.set(null)">
+</app-product-modal>
+
+<app-cart-drawer></app-cart-drawer>
+}
+
+<!-- Admin Authentication Modal -->
+@if (showAdminLogin()) {
+  <app-admin-login 
+    (success)="onAdminLoginSuccess()" 
+    (cancel)="showAdminLogin.set(false)">
+  </app-admin-login>
+}

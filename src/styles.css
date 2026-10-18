@@ -1,0 +1,1170 @@
+:root {
+  --ink: #12302b;
+  --paper: #f2f6f3;
+  --card: #fff;
+  --line: #d5e0da;
+  --accent: #f2b138;
+  --muted: #5d726c;
+  --red: #b3402f;
+  --green: #1f7a4d;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #e6f0ec;
+    --paper: #0f1d1a;
+    --card: #172925;
+    --line: #2a403a;
+    --muted: #93aaa3;
+    --red: #ff8d7a;
+    --green: #5fd19a;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 16px/1.5 Figtree, "Noto Sans Malayalam", system-ui, sans-serif;
+  padding-bottom: 0;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.is-hidden {
+  display: none;
+}
+
+h1,
+.name,
+.price,
+.pop-title,
+.cart-head h2,
+.total {
+  font-family: "Bricolage Grotesque", "Noto Sans Malayalam", sans-serif;
+}
+
+/* announcement bar */
+.announce {
+  background: var(--ink);
+  color: var(--paper);
+  text-align: center;
+  font-size: 13px;
+  padding: 7px 14px;
+}
+
+/* header & tools */
+.top {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+}
+
+.wrap {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 16px;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+}
+
+h1 {
+  font: 700 clamp(20px, 4vw, 28px)/1.1 "Bricolage Grotesque", sans-serif;
+  margin: 0;
+  flex: 1;
+}
+
+.cartbtn {
+  position: relative;
+  border: 0;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 10px 16px;
+  border-radius: 99px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.cartbtn b,
+.cart-count {
+  background: var(--accent);
+  color: #12302b;
+  border-radius: 99px;
+  padding: 0 8px;
+  margin-left: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  min-width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tools {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 12px;
+}
+
+input[type="search"],
+select,
+.f input,
+.f textarea {
+  width: 100%;
+  padding: 11px 13px;
+  border: 1.5px solid var(--line);
+  border-radius: 10px;
+  background: var(--card);
+}
+
+.chips {
+  grid-column: 1/-1;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-bottom: 2px;
+}
+
+.chips::-webkit-scrollbar {
+  display: none;
+}
+
+.chip {
+  flex: none;
+  padding: 7px 14px;
+  border: 1.5px solid var(--line);
+  border-radius: 99px;
+  background: var(--card);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.chip[aria-pressed="true"],
+.chip.active {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+
+#langBtn {
+  font-weight: 600;
+}
+
+.admin-header-btn {
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.admin-header-btn:hover {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+
+.admin-quick-link {
+  font-weight: 600;
+}
+
+/* hero section */
+.hero {
+  background: #12302b;
+  color: #f2f6f3;
+  border-radius: 22px;
+  margin: 16px 0 12px;
+  padding: 30px 26px;
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 22px;
+  overflow: hidden;
+}
+
+.hero h2 {
+  font: 700 clamp(28px, 5.2vw, 48px)/1.08 "Bricolage Grotesque", "Noto Sans Malayalam", sans-serif;
+  margin: 0 0 12px;
+  letter-spacing: -0.01em;
+}
+
+.hero p {
+  color: #bdd3cb;
+  margin: 0 0 20px;
+  max-width: 46ch;
+}
+
+.hero .btns {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn-hero {
+  display: inline-block;
+  padding: 12px 22px;
+  border-radius: 99px;
+  background: var(--accent);
+  color: #12302b;
+  font-weight: 700;
+  border: 0;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn-hero.btn-ghost {
+  background: transparent;
+  color: #f2f6f3;
+  border: 1.5px solid #f2f6f3b0;
+}
+
+.hero-vis {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  align-self: center;
+}
+
+.hv {
+  aspect-ratio: 3/4;
+  border-radius: 16px;
+  background: #ffffff1c;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  font-size: 34px;
+}
+
+.hv:nth-child(2) {
+  transform: translateY(18px);
+}
+
+.hv img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* trust strip */
+.trust {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.ti {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 10px 12px;
+}
+
+.ti .ic {
+  font-size: 22px;
+}
+
+.ti b {
+  display: block;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.ti small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* category tiles */
+.cats {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  padding: 2px 2px 8px;
+  scrollbar-width: none;
+}
+
+.cats::-webkit-scrollbar {
+  display: none;
+}
+
+.ctile {
+  flex: none;
+  width: 98px;
+  border: 0;
+  background: none;
+  padding: 0;
+  text-align: center;
+  cursor: pointer;
+}
+
+.ctile .ci {
+  display: grid;
+  place-items: center;
+  width: 98px;
+  height: 98px;
+  border-radius: 24px;
+  background: var(--line);
+  overflow: hidden;
+  font-size: 34px;
+  border: 2px solid transparent;
+  transition: border-color 0.15s ease;
+}
+
+.ctile .ci img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.ctile[aria-pressed="true"] .ci,
+.ctile.active .ci {
+  border-color: var(--accent);
+}
+
+.ctile .cl {
+  display: block;
+  margin-top: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--ink);
+}
+
+/* sections and rows */
+.sec {
+  margin-top: 26px;
+}
+
+.sec-h {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.sec-h h3 {
+  margin: 0;
+  font: 700 clamp(20px, 3.4vw, 26px)/1.15 "Bricolage Grotesque", "Noto Sans Malayalam", sans-serif;
+}
+
+.sec-h .count {
+  margin: 0;
+}
+
+#catalog {
+  scroll-margin-top: 70px;
+}
+
+app-product-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  min-width: 0;
+}
+
+.row {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding: 4px 4px 12px;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  align-items: stretch;
+}
+
+.row::-webkit-scrollbar {
+  display: none;
+}
+
+.row app-product-card {
+  flex: 0 0 220px;
+  width: 220px;
+  min-width: 220px;
+  max-width: 220px;
+  scroll-snap-align: start;
+}
+
+/* main product grid */
+main {
+  padding: 16px 0 70px;
+}
+
+.count {
+  color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  align-items: stretch;
+}
+
+.card {
+  position: relative;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.card.hl {
+  box-shadow: 0 0 0 3px var(--accent);
+}
+
+.img {
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+}
+
+.img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 12px;
+  display: block;
+  transition: transform 0.2s ease;
+}
+
+.card:hover .img img {
+  transform: scale(1.05);
+}
+
+.tag {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: var(--accent);
+  color: #12302b;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 99px;
+  z-index: 2;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.body {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.cat {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: 16px;
+  margin-bottom: 2px;
+}
+
+.name {
+  font: 700 16px/1.3 "Bricolage Grotesque", "Noto Sans Malayalam", sans-serif;
+  margin: 0 0 4px;
+  cursor: pointer;
+  background: none;
+  border: 0;
+  padding: 0;
+  text-align: left;
+  color: var(--ink);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  height: 2.6em;
+  min-height: 2.6em;
+  word-break: break-word;
+}
+
+.desc {
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--muted);
+  margin: 0 0 8px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  height: 2.8em;
+  min-height: 2.8em;
+  word-break: break-word;
+}
+
+.pr {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 6px;
+  min-height: 28px;
+}
+
+.price {
+  font: 700 18px "Bricolage Grotesque", sans-serif;
+}
+
+.old {
+  color: var(--muted);
+  text-decoration: line-through;
+  font-size: 13px;
+}
+
+.stock-status {
+  min-height: 18px;
+  display: flex;
+  align-items: center;
+  margin-top: 2px;
+}
+
+.out {
+  color: var(--red);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.btn {
+  border: 0;
+  background: var(--accent);
+  color: #12302b;
+  font-weight: 600;
+  padding: 10px 14px;
+  border-radius: 10px;
+  width: 100%;
+  margin-top: 6px;
+  cursor: pointer;
+  text-align: center;
+  transition: opacity 0.15s, background-color 0.15s, transform 0.1s;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.btn.alt {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+a.btn {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+}
+
+.empty {
+  padding: 40px 0;
+  color: var(--muted);
+  grid-column: 1/-1;
+  text-align: center;
+}
+
+.empty.sm {
+  padding: 20px 0;
+}
+
+.sk {
+  height: 400px;
+  border-radius: 14px;
+  background: linear-gradient(90deg, var(--line), var(--card), var(--line));
+  background-size: 200%;
+  animation: sh 1.2s infinite;
+}
+
+@keyframes sh {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+/* dialog modals */
+dialog {
+  border: 0;
+  padding: 0;
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+}
+
+#pop {
+  width: min(94vw, 720px);
+  border-radius: 16px;
+  max-height: 90vh;
+  overflow: auto;
+  position: fixed;
+  inset: 0;
+  margin: auto;
+}
+
+#pop .in {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+#pop .img {
+  aspect-ratio: 1;
+  height: 100%;
+  min-height: 260px;
+}
+
+#pop .txt {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pop-title {
+  margin: 0;
+  font: 700 24px "Bricolage Grotesque", sans-serif;
+}
+
+.pop-desc {
+  margin: 0;
+  color: var(--muted);
+}
+
+.x {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 0;
+  background: var(--card);
+  font-size: 20px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+}
+
+/* cart dialog */
+#cart {
+  margin: 0 0 0 auto;
+  height: 100vh;
+  max-height: 100vh;
+  width: min(100vw, 420px);
+  border-radius: 0;
+  overflow: auto;
+  position: fixed;
+  right: 0;
+  top: 0;
+}
+
+#cart .in {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 100%;
+}
+
+.cart-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cart-head h2 {
+  margin: 0;
+  font: 700 22px "Bricolage Grotesque", sans-serif;
+}
+
+.li {
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  gap: 10px;
+  align-items: center;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 8px;
+}
+
+.li .t {
+  width: 56px;
+  height: 56px;
+  border-radius: 8px;
+  background: var(--line);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  font-size: 24px;
+}
+
+.li img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.li small {
+  color: var(--muted);
+  display: block;
+}
+
+.qty {
+  display: inline-flex;
+  align-items: center;
+  border: 1.5px solid var(--line);
+  border-radius: 10px;
+  background: var(--card);
+}
+
+.qty button {
+  border: 0;
+  background: none;
+  width: 34px;
+  height: 34px;
+  font-size: 18px;
+}
+
+.qty span {
+  min-width: 26px;
+  text-align: center;
+}
+
+.sum {
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  font: 700 20px "Bricolage Grotesque", sans-serif;
+  padding-top: 6px;
+  border-top: 1px dashed var(--line);
+}
+
+.f {
+  display: grid;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.f label {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.f .chip {
+  justify-self: start;
+}
+
+.msg {
+  background: var(--card);
+  border: 1px solid var(--green);
+  color: var(--green);
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.notice-box {
+  background: #fff8e6;
+  border: 1px solid #ffd166;
+  color: #7a5200;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+
+.err {
+  color: var(--red);
+  font-size: 14px;
+}
+
+.pin-msg {
+  min-height: 1.2em;
+  font-size: 13px;
+}
+
+.pin-msg.ok {
+  color: var(--green);
+}
+
+.pin-msg.bad {
+  color: var(--red);
+  font-weight: 600;
+}
+
+/* footer */
+.foot {
+  background: var(--card);
+  border-top: 1px solid var(--line);
+  margin-top: 40px;
+  padding: 28px 0 18px;
+}
+
+.fgrid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 24px;
+}
+
+.foot h4 {
+  margin: 0 0 8px;
+  font: 700 17px "Bricolage Grotesque", "Noto Sans Malayalam", sans-serif;
+}
+
+.foot p {
+  margin: 0;
+  color: var(--muted);
+  max-width: 42ch;
+}
+
+.flist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+  color: var(--muted);
+}
+
+.flist a,
+.linkbtn {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  background: none;
+  border: 0;
+  padding: 0;
+  font-size: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+
+.copy {
+  margin-top: 20px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* mobile responsive */
+@media (max-width: 960px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+  }
+}
+
+@media (max-width: 680px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .row app-product-card {
+    flex: 0 0 180px;
+    width: 180px;
+    min-width: 180px;
+    max-width: 180px;
+  }
+}
+
+@media (max-width: 700px) {
+  body {
+    padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .cartbtn {
+    display: none;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 24px 20px;
+  }
+
+  .hero-vis {
+    display: none;
+  }
+
+  .trust {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .fgrid {
+    grid-template-columns: 1fr;
+  }
+
+  .bbar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 20;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: var(--paper);
+    border-top: 1px solid var(--line);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  .bb {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    padding: 8px 0;
+    border: 0;
+    background: none;
+    color: var(--ink);
+    font-size: 11px;
+    text-decoration: none;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .bb .i {
+    font-size: 20px;
+    line-height: 1;
+  }
+
+  .bb b {
+    position: absolute;
+    top: 4px;
+    left: calc(50% + 6px);
+    background: var(--accent);
+    color: #12302b;
+    border-radius: 99px;
+    padding: 0 6px;
+    font-size: 11px;
+  }
+}
+
+@media (min-width: 701px) {
+  .bbar {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  #pop .in {
+    grid-template-columns: 1fr;
+  }
+
+  #cart {
+    margin: auto 0 0;
+    width: 100vw;
+    height: auto;
+    max-height: 92vh;
+    border-radius: 18px 18px 0 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .row app-product-card {
+    flex: 0 0 155px;
+    width: 155px;
+    min-width: 155px;
+    max-width: 155px;
+  }
+
+  .body {
+    padding: 10px !important;
+  }
+
+  .name {
+    font-size: 14px !important;
+    height: 2.6em;
+    min-height: 2.6em;
+  }
+
+  .desc {
+    display: none;
+  }
+
+  .btn {
+    height: 38px;
+    font-size: 13px;
+    padding: 6px 10px;
+  }
+
+  .head {
+    display: grid;
+    grid-template-columns: 1fr 42px 48px;
+    align-items: center;
+    gap: 10px;
+  }
+
+  h1 {
+    min-width: 0;
+    font-size: 20px;
+  }
+
+  /* Language icon */
+  #langBtn {
+    position: static;
+    width: 42px;
+    min-width: 42px;
+    height: 42px;
+    padding: 0 !important;
+    font-size: 0 !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  #langBtn::before {
+    content: "🌐";
+    font-size: 21px;
+    line-height: 1;
+  }
+
+  /* Cart icon */
+  .cartbtn {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    z-index: 1;
+    width: 48px;
+    min-width: 48px;
+    height: 48px;
+    padding: 0 !important;
+    margin: 0;
+    border-radius: 50%;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    font-size: 0 !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+  }
+
+  .cartbtn::before {
+    content: "🛒";
+    font-size: 22px;
+    line-height: 1;
+  }
+
+  /* Cart count badge */
+  .cartbtn b {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    margin: 0;
+    min-width: 20px;
+    min-height: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 5px;
+    font-size: 11px;
+    line-height: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .card {
+    transition: none;
+  }
+  .sk {
+    animation: none;
+  }
+}
